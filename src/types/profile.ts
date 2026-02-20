@@ -45,3 +45,15 @@ export interface FilterState {
   maxPrice: number | undefined;
 }
 
+export interface TutorDemo {
+  id: string;
+  userId: string;
+  bio: string;
+  pricePerHour: number;
+  rating: number;
+  totalReviews: number;
+  createdAt: string;
+  user: User;
+  categories: TutorCategory[];
+  availabilities: Availability[];
+}

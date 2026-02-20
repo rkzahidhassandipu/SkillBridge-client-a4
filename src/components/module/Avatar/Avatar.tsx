@@ -23,8 +23,6 @@ export function AvatarMenu({ image }: AvatarMenuProps) {
   }
 
 
-  console.log("Profile",image)
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

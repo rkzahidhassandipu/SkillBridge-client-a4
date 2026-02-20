@@ -2,6 +2,7 @@
 
 import Footer from "@/components/layout/footer/Footer";
 import NavbarServer from "@/components/layout/navbar/navbar5";
+export const dynamic = 'force-dynamic';
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   return (

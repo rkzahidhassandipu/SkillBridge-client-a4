@@ -84,7 +84,10 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   };
 
   return (
-    <Card {...props} className="max-w-md mx-auto mt-12 shadow-lg border rounded-xl">
+    <Card
+      {...props}
+      className="max-w-md mx-auto mt-12 shadow-lg border rounded-xl"
+    >
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
         <CardDescription className="text-gray-500 mt-1">
@@ -96,7 +99,8 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            form.submit();
+            e.stopPropagation();
+            form.handleSubmit();
           }}
           className="space-y-4"
         >
@@ -105,7 +109,11 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             <form.Field
               name="name"
               children={(field) => (
-                <Field data-invalid={field.state.meta.isTouched && !field.state.meta.isValid}>
+                <Field
+                  data-invalid={
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  }
+                >
                   <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
                   <Input
                     id={field.name}
@@ -122,7 +130,11 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             <form.Field
               name="email"
               children={(field) => (
-                <Field data-invalid={field.state.meta.isTouched && !field.state.meta.isValid}>
+                <Field
+                  data-invalid={
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  }
+                >
                   <FieldLabel htmlFor={field.name}>Email</FieldLabel>
                   <Input
                     type="email"
@@ -140,7 +152,11 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             <form.Field
               name="password"
               children={(field) => (
-                <Field data-invalid={field.state.meta.isTouched && !field.state.meta.isValid}>
+                <Field
+                  data-invalid={
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  }
+                >
                   <FieldLabel htmlFor={field.name}>Password</FieldLabel>
                   <Input
                     type="password"
@@ -158,7 +174,11 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             <form.Field
               name="confirmPassword"
               children={(field) => (
-                <Field data-invalid={field.state.meta.isTouched && !field.state.meta.isValid}>
+                <Field
+                  data-invalid={
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  }
+                >
                   <FieldLabel htmlFor={field.name}>Confirm Password</FieldLabel>
                   <Input
                     type="password"
@@ -196,7 +216,10 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             />
           </FieldGroup>
 
-          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+          <Button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+          >
             Create Account
           </Button>
         </form>

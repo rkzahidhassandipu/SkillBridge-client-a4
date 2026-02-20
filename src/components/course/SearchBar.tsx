@@ -27,6 +27,7 @@ export default function SearchBar({
   setSelectedCategory,
   onSearch,
 }: SearchBarProps) {
+  console.log(selectedCategory)
   return (
     <div className="bg-white border-b border-gray-100 sticky top-0 z-20 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-3 flex gap-2 items-center">

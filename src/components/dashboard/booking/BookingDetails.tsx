@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import ReviewSection from "./Review";
-import { Booking, Review } from "@/types";
+import { Booking, Bookings, Review, Reviews } from "@/types";
 
 interface Props {
   bookingsData: Booking[];
@@ -199,11 +199,13 @@ const BookingCard = ({ booking, index, review }: { booking: Booking; index: numb
   );
 };
 
-export default function BookingDetailsPage({ bookingsData, myAllReview }: {bookingsData: Props; myAllReview: Review}) {
+export default function BookingDetailsPage({ bookingsData, myAllReview }: {
+  bookingsData: Bookings[]; 
+  myAllReview: Reviews[];  
+}) {
   // Remove PENDING bookings
-  const filteredBookings = bookingsData.filter(b => b.status !== "PENDING");
+  const filteredBookings = bookingsData.filter(b => b.status !== "CONFIRMED");
 
-  console.log("bookingsData",bookingsData)
   return (
     <div
       style={{
@@ -240,9 +242,9 @@ export default function BookingDetailsPage({ bookingsData, myAllReview }: {booki
             return (
               <BookingCard 
                 key={booking.id} 
-                booking={booking} 
+                booking={booking as unknown as Booking} 
                 index={i} 
-                review={myAllReview} // pass the review to BookingCard
+                review={myAllReview as unknown as Reviews}
               />
             );
           })}

@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import { FilterState, Tutor } from "@/types";
-import { MOCK_TUTORS } from "./Constants";
 import TutorCard from "./TutorCard";
 import SearchBar from "./SearchBar";
 import FilterSidebar from "./FilterSidebar";
@@ -25,7 +24,7 @@ export default function TutorsPage({ tutorAll }: TutorsPageProps) {
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [sortBy, setSortBy] = useState("price");
 
-  const tutorAllData = tutorAll?.data?.data;
+  const tutorAllData = tutorAll;
   // ── Filter state ──────────────────────────────────────────────────────────
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");

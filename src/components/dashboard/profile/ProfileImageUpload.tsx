@@ -11,9 +11,11 @@ interface Props {
   imageUrl?: string;
   userId: string;
   initials: string;
+  onUpload?: (url: string) => Promise<void>;
+  size?: number; // optional, defaults if not provided
 }
 
-export default function ProfileImageUpload({ imageUrl, userId, initials }: Props) {
+export default function ProfileImageUpload({ imageUrl, userId, initials, onUpload, size }: Props) {
   const [localPreview, setLocalPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -34,7 +36,7 @@ export default function ProfileImageUpload({ imageUrl, userId, initials }: Props
     },
     onSuccess: (newUrl) => {
       // Optimistically show the new image immediately
-      setLocalPreview(newUrl);
+      setLocalPreview(newUrl as string);
 
       // Refetch user profile so parent query updates
       queryClient.invalidateQueries({ queryKey: ["user", userId] });

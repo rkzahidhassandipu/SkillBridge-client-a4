@@ -19,6 +19,12 @@ type Availability = {
   status: string;
 };
 
+interface BadgeProps {
+  variant?: "default" | "outline" | "destructive" | "secondary" | "ghost" | "success";
+  children: React.ReactNode;
+}
+
+
 const columns: ColumnDef<Availability>[] = [
   {
     accessorKey: "day",
@@ -34,7 +40,8 @@ const columns: ColumnDef<Availability>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <Badge variant="success">{row.original.status}</Badge>
+      <Badge variant="default">{row.original.status}</Badge>
+
     ),
   },
 ];
@@ -49,7 +56,9 @@ export default function AvailabilityPanel() {
     const res = await getAllAvailability();
 
     // Throw error only if res.error exists
-    if (res.error) throw new Error(res.error.message);
+    if (res && "success" in res && !res.success) {
+      throw new Error((res as any).message || "Something went wrong");
+    }
 
     // Ensure always array
     const slots = res.data?.data ?? [];

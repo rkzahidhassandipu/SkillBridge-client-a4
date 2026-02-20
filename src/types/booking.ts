@@ -26,7 +26,7 @@ export interface Booking  {
     name: string;
     email: string;
   };
-  createdAt: string;       // ISO timestamp when booking was created
+  createdAt: string;
 };
 
 
@@ -35,9 +35,9 @@ export interface Review {
   bookingId: string;
   studentId: string;
   tutorId: string;
-  rating: number; // 1–5
+  rating: number; 
   comment: string;
-  createdAt: string; // ISO date string
+  createdAt: string; 
 }
 export interface ReviewSectionProps {
   bookingId: string;
@@ -90,6 +90,37 @@ export type ReviewTutuor = {
   comment: string;
   createdAt: string;
   student: {
+    id: string;
+    name: string;
+    email: string;
+  };
+};
+
+export type Reviews = {
+  id: string;
+  bookingId: string;
+  studentId: string;
+  tutorId: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+  tutor: Tutor;
+};
+
+export interface Bookings  {
+  id: string;              // booking ID
+  studentId: string;       // student who booked
+  tutorId: string;         // tutor ID
+  categoryId: string;      // category ID
+  date: string;            // booking date (ISO string)
+  timeSlot: string;        // e.g. "18:00-16:00"
+  status: "CONFIRMED" | "CANCELLED" | "COMPLETED"; // booking status
+  category: {
+    id: string;
+    name: string;
+    description: string | null;
+  };
+  tutor: {
     id: string;
     name: string;
     email: string;

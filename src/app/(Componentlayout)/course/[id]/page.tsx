@@ -1,7 +1,6 @@
 import { getSingleTutor } from "@/actions/profile.actions";
 import TutorProfile from "@/components/course/single/TutorProfile";
 
-// Server Component — no "use client"
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const singleTutor = await getSingleTutor(id);

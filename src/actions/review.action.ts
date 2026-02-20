@@ -29,7 +29,6 @@ export const getAllReviewTutor = async (tutorId: string) => {
   try {
     const res = await reviewBook.getAllReviewTutor(tutorId);
 
-    console.log("Action raw response:", res);
 
     return res; // already { data, error }
   } catch (err) {

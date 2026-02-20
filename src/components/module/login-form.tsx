@@ -22,7 +22,6 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-
 const formSchema = z.object({
   email: z.string().email("Invalid email"),
   password: z.string().min(6, "Password must be at least 6 characters"),
@@ -42,7 +41,6 @@ export function LoginForm({
   };
 
   const form = useForm({
-    
     defaultValues: {
       email: "",
       password: "",
@@ -51,7 +49,6 @@ export function LoginForm({
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log("FORM SUBMITTED", value);
       const toastId = toast.loading("Logging in...");
       try {
         const { data, error } = await authClient.signIn.email(value);
@@ -105,11 +102,18 @@ export function LoginForm({
                       onChange={(e) => field.handleChange(e.target.value)}
                       required
                     />
-                    {field.state.meta.touched && field.state.meta.errors ? (
-                      <em className="text-sm text-red-500">
-                        {field.state.meta.errors}
-                      </em>
-                    ) : null}
+                    {field.state.meta.isTouched &&
+                      field.state.meta.errors.length > 0 && (
+                        <div className="text-sm text-red-500 space-y-1">
+                          {field.state.meta.errors.map((err, i) => (
+                            <div key={i}>
+                              {typeof err === "string"
+                                ? err
+                                : (err?.message ?? "Invalid value")}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                   </Field>
                 )}
               />
@@ -121,12 +125,12 @@ export function LoginForm({
                   <Field>
                     <div className="flex items-center">
                       <FieldLabel htmlFor="password">Password</FieldLabel>
-                      <a
+                      <Link
                         href="#"
                         className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                       >
                         Forgot your password?
-                      </a>
+                      </Link>
                     </div>
                     <Input
                       id="password"
@@ -136,11 +140,18 @@ export function LoginForm({
                       onChange={(e) => field.handleChange(e.target.value)}
                       required
                     />
-                    {field.state.meta.touched && field.state.meta.errors ? (
-                      <em className="text-sm text-red-500">
-                        {field.state.meta.errors}
-                      </em>
-                    ) : null}
+                    {field.state.meta.isTouched &&
+                      field.state.meta.errors.length > 0 && (
+                        <div className="text-sm text-red-500 space-y-1">
+                          {field.state.meta.errors.map((err, i) => (
+                            <div key={i}>
+                              {typeof err === "string"
+                                ? err
+                                : (err?.message ?? "Invalid value")}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                   </Field>
                 )}
               />

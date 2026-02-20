@@ -1,14 +1,13 @@
 import { getTutorAll } from "@/actions/profile.actions";
 import { TutorCard } from "./TutorCard";
+import { Instructor } from "@/types"; // make sure this matches your API structure
 
 export default async function TutorsSection() {
   const profile = await getTutorAll();
-  const data = profile?.data?.data || [];
 
-  // Shuffle array randomly
+  // Explicitly type the data
+  const data: Instructor[] = profile?.data?.data || [];
   const shuffled = data.sort(() => 0.5 - Math.random());
-
-  // Take up to 4 tutors
   const tutorsToShow = shuffled.slice(0, 4);
 
   return (
@@ -18,12 +17,15 @@ export default async function TutorsSection() {
           Meet Our Professional Tutors
         </h2>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {tutorsToShow.map((tutor) => (
+          {tutorsToShow.map((tutor: Instructor) => (
             <TutorCard
               key={tutor.id}
-              name={tutor?.user?.name}
-              bio={tutor.bio}            
-              image={tutor?.user?.image || "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?q"} 
+              name={tutor.user.name}
+              bio={tutor.bio}
+              image={
+                tutor.user.image ||
+                "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?q"
+              }
             />
           ))}
         </div>

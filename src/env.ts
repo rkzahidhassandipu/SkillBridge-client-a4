@@ -25,8 +25,9 @@ export const env = createEnv({
     NEXT_PUBLIC_IMGBB_UPLOAD_URL: process.env.NEXT_PUBLIC_IMGBB_UPLOAD_URL,
   },
 
-  onValidationError: (issue) => {
-    console.error("❌ Invalid environment variables:", issue.format());
+  onValidationError: (issues) => {
+    // just log raw issues
+    console.error("❌ Invalid environment variables:", issues);
     throw new Error("Invalid environment variables");
   },
 });

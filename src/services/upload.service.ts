@@ -18,7 +18,6 @@ export const uploadService = {
     }
 
     const result = await res.json();
-    console.log("ImgBB response:", result); // 🔍 Debug
 
     if (!result.success || !result.data?.display_url) {
       throw new Error(result.error?.message || "Image upload failed");

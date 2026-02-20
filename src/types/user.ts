@@ -28,6 +28,7 @@ export interface UsersTableProps {
   initialUsers: User[];
 }
 
+
 export interface UserRowProps {
   row: Row<User>;
   onUpdateUser: (

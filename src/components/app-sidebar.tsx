@@ -99,7 +99,7 @@ export function AppSidebar({
                                   : "text-muted-foreground hover:text-foreground"
                               )}
                             >
-                              <Link href={sub.url}>
+                              <Link href={sub.url ?? "/"}>
                                 <span>{sub.title}</span>
                               </Link>
                             </SidebarMenuSubButton>

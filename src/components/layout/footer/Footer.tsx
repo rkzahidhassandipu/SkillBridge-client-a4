@@ -38,9 +38,9 @@ export default function Footer() {
             <ul className="mt-6 space-y-4">
               {["About", "Features", "Works", "Career"].map((item) => (
                 <li key={item}>
-                  <a className="text-base text-black hover:text-blue-600 transition">
+                  <p className="text-base text-black hover:text-blue-600 transition">
                     {item}
-                  </a>
+                  </p>
                 </li>
               ))}
             </ul>
@@ -60,9 +60,9 @@ export default function Footer() {
                 "Privacy Policy",
               ].map((item) => (
                 <li key={item}>
-                  <a className="text-base text-black hover:text-blue-600 transition">
+                  <p className="text-base text-black hover:text-blue-600 transition">
                     {item}
-                  </a>
+                  </p>
                 </li>
               ))}
             </ul>

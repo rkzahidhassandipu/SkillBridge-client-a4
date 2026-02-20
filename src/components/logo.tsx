@@ -10,6 +10,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import Link from "next/link";
 
 interface LogoProps extends React.HTMLAttributes<HTMLAnchorElement> {
   url: string;
@@ -85,13 +86,13 @@ const LogoBrandDownload = ({
 
 const Logo = ({ url, className, children, ...props }: LogoProps) => {
   return (
-    <a
+    <Link
       href={url}
       className={cn("flex max-h-8 items-center gap-2", className)}
       {...props}
     >
       {children}
-    </a>
+    </Link>
   );
 };
 

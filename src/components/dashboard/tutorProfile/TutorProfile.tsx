@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
+
 export default function TutorProfile({
   tutor,
   profile,
@@ -72,9 +73,10 @@ export default function TutorProfile({
           <CardContent className="p-6 flex flex-col md:flex-row md:justify-between md:items-center gap-6">
             <div className="flex items-center gap-6">
               <ProfileImageUpload
+              userId={tutorUserId}
                 imageUrl={image}
                 initials={name ? name[0] : "U"}
-                onUpload={(url) => {
+                onUpload={ async (url) => {
                   // optional: update tutor profile image if needed
                   // e.g., call an API to save it or just update local state
                   console.log("New uploaded image URL:", url);
@@ -121,7 +123,6 @@ export default function TutorProfile({
                   subjectData={subjectData}
                   createProfile={createProfile} // function reference, form will call it with its own payload
                   onCreated={(newProfile: any) => {
-                    console.log("Tutor profile created");
                     // You can refetch tutor data here to update UI
                     setTutorProfile(newProfile);
                   }}

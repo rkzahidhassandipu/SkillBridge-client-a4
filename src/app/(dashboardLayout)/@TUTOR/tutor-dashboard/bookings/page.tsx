@@ -3,15 +3,19 @@ import { getAllReviewTutor } from "@/actions/review.action";
 import BookingsPage from "@/components/dashboard/booking/booking";
 import ReviewsRatings from "@/components/dashboard/ReviewsRatings/ReviewsRatings";
 import { userService } from "@/services/user.service";
+import { ReviewTutuor } from "@/types"; // type import
 
 const Page = async () => {
   const getTutorBooks = await getTutorBook();
 
   const { data } = await userService.getSession();
   const tutorId = data.user?.id;
-  const myAllReview = await getAllReviewTutor(tutorId);
-  const bookData = getTutorBooks?.data;
 
+  // Review data extract
+  const { data: reviewData } = await getAllReviewTutor(tutorId);
+  const reviews: ReviewTutuor[] = reviewData || [];
+
+  const bookData = getTutorBooks?.data || [];
 
   return (
     <div className="space-y-8">
@@ -32,7 +36,7 @@ const Page = async () => {
         </section>
 
         <section className="flex-1 bg-white border-slate-200 ">
-          <ReviewsRatings myAllReview={myAllReview} />
+          <ReviewsRatings myAllReview={reviews} />
         </section>
       </div>
     </div>

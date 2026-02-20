@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,12 +10,15 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { User } from "@/types/user";
+import { User, UserRole, UserStatus } from "@/types/user";
 import EditUserModal from "./EditUserModal";
 
 interface UserRowActionsProps {
   user: User;
-  onUpdateUser: (updated: Partial<User>) => void;
+  onUpdateUser: (
+    id: string,
+    data: { role?: UserRole; status?: UserStatus }
+  ) => void;
 }
 
 export default function UserRowActions({
@@ -23,37 +27,45 @@ export default function UserRowActions({
 }: UserRowActionsProps) {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
+  // 🔥 Convert Partial<User> → (id, data)
+  const handleUpdateFromModal = (updated: Partial<User>) => {
+    const payload: { role?: UserRole; status?: UserStatus } = {};
+
+    if (updated.role) payload.role = updated.role;
+    if (updated.status) payload.status = updated.status;
+
+    onUpdateUser(user.id, payload);
+  };
+
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent align="end">
           <DropdownMenuItem
             onClick={() => navigator.clipboard.writeText(user.id)}
           >
             Copy user ID
           </DropdownMenuItem>
+
           <DropdownMenuSeparator />
+
           <DropdownMenuItem onClick={() => setIsEditOpen(true)}>
             Edit user
-          </DropdownMenuItem>
-          <DropdownMenuItem className="text-red-600">
-            Delete user
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* FIXED: Always render the modal, control visibility with 'open' prop */}
       <EditUserModal
         user={user}
-        open={isEditOpen} 
+        open={isEditOpen}
         onClose={() => setIsEditOpen(false)}
-        onUpdate={onUpdateUser}
+        onUpdate={handleUpdateFromModal}
       />
     </>
   );

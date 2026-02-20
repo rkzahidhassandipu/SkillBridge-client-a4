@@ -26,9 +26,14 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
+interface ReviewResponse {
+  success: boolean;
+  data: ReviewTutuor[];
+}
+
 export default function ReviewsRatings({ myAllReview }: ReviewsRatingsProps) {
   const totalReviews = myAllReview?.length || 0;
-const AllReview = myAllReview?.data
+  const AllReview: ReviewTutuor[] = myAllReview || [];
   return (
     <div className="w-full mx-auto p-6">
       <Card className="shadow-lg border-0 bg-gradient-to-br from-indigo-50 to-purple-50">

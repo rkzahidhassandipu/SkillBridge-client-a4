@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/sidebar";
 import { ROLES } from "@/constants/roles";
 import { userService } from "@/services/user.service";
+export const dynamic = 'force-dynamic';
 
 export default async function Layout({
   ADMIN,

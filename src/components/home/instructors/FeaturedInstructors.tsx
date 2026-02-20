@@ -2,10 +2,13 @@ import { getTutorAll } from "@/actions/profile.actions";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { InstructorCard } from "./InstructorCard";
+import { Instructor } from "@/types"; // make sure this is correctly defined
 
 export default async function FeaturedInstructors() {
   const profile = await getTutorAll();
-  const data = profile?.data?.data || [];
+
+  // Explicitly type the data
+  const data: Instructor[] = profile?.data?.data || [];
 
   // Limit to maximum 8 instructors
   const displayedInstructors = data.slice(0, 8);
@@ -26,7 +29,7 @@ export default async function FeaturedInstructors() {
         </div>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {displayedInstructors.map((instructor) => (
+          {displayedInstructors.map((instructor: Instructor) => (
             <InstructorCard key={instructor.id} instructor={instructor} />
           ))}
         </div>

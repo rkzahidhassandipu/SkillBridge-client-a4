@@ -27,18 +27,25 @@ import { Separator } from "@/components/ui/separator";
 import ProfileImageUpload from "./ProfileImageUpload";
 import { updateProfile } from "@/actions/profile.actions";
 import { ProfileData } from "@/types";
-import { useRouter } from "next/navigation"; // 1. Imported useRouter correctly
+import { useRouter } from "next/navigation";
 
 interface ProfileViewProps {
   profile: ProfileData;
 }
 
+interface UpdateUserProfilePayload {
+  name?: string;
+  phone?: string;
+  email?: string;
+  image?: string;
+}
+
+
 const ProfileView: React.FC<ProfileViewProps> = ({ profile }) => {
-  const router = useRouter(); // 2. Initialized router
+  const router = useRouter();
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
-  
-  // 3. Ensured initial values are never null/undefined to fix controlled input error
+
   const [formData, setFormData] = useState({
     name: profile.user.name || "",
     phone: profile.user.phone || "",
@@ -54,28 +61,29 @@ const ProfileView: React.FC<ProfileViewProps> = ({ profile }) => {
           .join("")
           .toUpperCase();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    // 4. Ensure value is string
-    setFormData({ ...formData, [e.target.name]: e.target.value || "" });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const updatePayload = {
-        name: formData.name,
-        phone: formData.phone || null,
-        image: formData.image,
-      };
+      // Prepare payload with only fields that have values
+      const updatePayload: UpdateUserProfilePayload = {};
+      if (formData.name) updatePayload.name = formData.name;
+      if (formData.phone) updatePayload.phone = formData.phone;
+      if (formData.image) updatePayload.image = formData.image;
 
       const res = await updateProfile(updatePayload);
+
       if (res.success) {
         toast.success("Profile updated successfully!");
         setEditing(false);
-        router.refresh(); // Refresh data
+        router.refresh();
       } else {
-        toast.error(res.message);
+        toast.error(res.message || "Failed to update profile");
       }
     } catch {
       toast.error("Failed to update profile");
@@ -93,18 +101,25 @@ const ProfileView: React.FC<ProfileViewProps> = ({ profile }) => {
     setEditing(false);
   };
 
-  const handleImageUpload = (url: string) => {
+  const handleImageUpload = async (url: string) => {
+    const payload: UpdateUserProfilePayload = {
+      image: url,
+      phone: formData.phone || undefined,
+      name: formData.name || undefined,
+    };
     setFormData({ ...formData, image: url });
-    
-    updateProfile({ ...formData, image: url })
-      .then((res) => {
-        if (res.success) {
-          toast.success("Profile image updated!");
-          router.refresh(); 
-        }
-        else toast.error(res.message);
-      })
-      .catch(() => toast.error("Failed to update image"));
+
+    try {
+      const res = await updateProfile(payload);
+      if (res.success) {
+        toast.success("Profile image updated!");
+        router.refresh();
+      } else {
+        toast.error(res.message || "Failed to update image");
+      }
+    } catch {
+      toast.error("Failed to update image");
+    }
   };
 
   const formatDate = (date?: string) =>
@@ -123,6 +138,7 @@ const ProfileView: React.FC<ProfileViewProps> = ({ profile }) => {
           <ProfileImageUpload
             imageUrl={formData.image}
             onUpload={handleImageUpload}
+             userId={profile.user.id} 
             initials={getInitials(profile.user.name)}
           />
           <div>
@@ -137,14 +153,14 @@ const ProfileView: React.FC<ProfileViewProps> = ({ profile }) => {
                 variant="secondary"
                 className="px-3 py-1 text-sm font-medium"
               >
-                {profile?.user.role}
+                {profile.user.role}
               </Badge>
               <Badge
                 variant="outline"
                 className="px-3 py-1 text-sm font-medium text-green-700 border-green-200 bg-green-50"
               >
                 <CheckCircle className="w-4 h-4 mr-1.5" />
-                {profile?.user?.status}
+                {profile.user.status}
               </Badge>
             </div>
           </div>
@@ -239,13 +255,8 @@ const ProfileView: React.FC<ProfileViewProps> = ({ profile }) => {
                       {profile.user.email}
                     </p>
                   </div>
-                  {profile.user.emailVerified && (
-                    <Badge
-                      variant="outline"
-                      className="border-green-200 bg-green-50 text-green-700 text-xs"
-                    >
-                      Verified
-                    </Badge>
+                  {(profile.user as any).emailVerified && (
+                    <Badge variant="outline">Verified</Badge>
                   )}
                 </div>
                 <div className="flex items-center gap-4 p-4 rounded-lg bg-white border border-slate-100 shadow-sm">

@@ -1,6 +1,5 @@
-"use client";
-import BookSession from "./BookSession";
 import { Tutor } from "@/types";
+import BookSession from "./BookSession";
 
 export default function BookSessionWrapper({
   tutor,
@@ -9,5 +8,8 @@ export default function BookSessionWrapper({
   tutor: Tutor;
   createBooking?: (data: any) => Promise<void>;
 }) {
-  return <BookSession tutor={tutor} createBooking={createBooking} />;
+  // যদি createBooking না দেয়া হয়, তাহলে একটা dummy async function use করা
+  const handleBooking = createBooking ?? (async (data: any) => {});
+
+  return <BookSession tutor={tutor} createBooking={handleBooking} />;
 }

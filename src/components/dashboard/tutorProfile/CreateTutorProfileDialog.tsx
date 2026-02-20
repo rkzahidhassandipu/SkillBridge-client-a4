@@ -25,9 +25,10 @@ interface Props {
     pricePerHour: number;
     categoryIds: string[];
   }) => Promise<any>;
-  onCreated?: () => void;
+  onCreated?: (newProfile: any) => void;
   subjectData?: Category[];
 }
+
 
 export default function CreateTutorProfileDialog({
   createProfile,
@@ -60,15 +61,17 @@ export default function CreateTutorProfileDialog({
 
       setLoading(false);
 
-      if (res.success) {
-        toast.success("Tutor profile created successfully!");
-        setOpen(false);
-        onCreated?.();
-        setBio("");
-        setPrice(0);
-        setSelectedCategories([]);
-        window.location.reload();
-      } else {
+     if (res.success) {
+  toast.success("Tutor profile created successfully!");
+  setOpen(false);
+
+  onCreated?.(res.data); // ✅ pass the created profile
+
+  setBio("");
+  setPrice(0);
+  setSelectedCategories([]);
+}
+ else {
         alert("Error: " + (res.message || "Unknown error"));
       }
     } catch (err: any) {
@@ -109,7 +112,7 @@ export default function CreateTutorProfileDialog({
           />
 
           <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto border p-2 rounded-md">
-            {subjectData?.data?.map((cat) => {
+            {subjectData.map((cat) => {
               const catId = String(cat.id);
               const isSelected = selectedCategories.includes(catId);
 

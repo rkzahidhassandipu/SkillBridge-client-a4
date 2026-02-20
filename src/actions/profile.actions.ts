@@ -85,7 +85,7 @@ export const updateProfileTutor = async (
 type CreateTutorInput = {
   bio: string;
   pricePerHour: string | number;
-  categories: string[];
+  categoryIds: string[];
 };
 
 export const createTutorProfileAction = async (payload: CreateTutorInput) => {
@@ -95,8 +95,6 @@ export const createTutorProfileAction = async (payload: CreateTutorInput) => {
       pricePerHour: Number(payload.pricePerHour),
       categoryIds: payload.categoryIds,
     };
-
-    console.log("Submitting formatted payload:", formattedPayload);
     const { data, error } =
       await profileService.createTutorProfile(formattedPayload);
 

@@ -6,9 +6,6 @@ export default function FeaturesSection() {
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-6 text-center">
-        <p className="text-primary font-medium uppercase tracking-wide">
-          Better Learning. Better Results
-        </p>
         <h2 className="text-3xl font-bold mt-2">
           Online education platform for all
         </h2>

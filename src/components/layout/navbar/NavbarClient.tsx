@@ -6,7 +6,7 @@ import Image from "next/image";
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ModeToggle } from "@/components/ModeToggle/ModeToggle";
+// import { ModeToggle } from "@/components/ModeToggle/ModeToggle";
 import { AvatarMenu } from "@/components/module/Avatar/Avatar";
 import {
   NavigationMenu,
@@ -68,7 +68,7 @@ export function NavbarClient({ className, session }: NavbarClientProps) {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-4">
-            <ModeToggle />
+            {/* <ModeToggle /> */}
             {session?.user ? (
               <AvatarMenu image={session.user.image} />
             ) : (
@@ -120,7 +120,7 @@ export function NavbarClient({ className, session }: NavbarClientProps) {
 
                 {/* Actions */}
                 <div className="mt-4 flex gap-2">
-                  <ModeToggle />
+                  {/* <ModeToggle /> */}
                   {session?.user ? (
                     <AvatarMenu image={session.user.image} />
                   ) : (

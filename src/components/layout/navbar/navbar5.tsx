@@ -8,7 +8,7 @@ interface NavbarServerProps {
 
 export default async function NavbarServer({ className }: NavbarServerProps) {
     const { data: session } = await userService.getSession();
-    console.log(session)
+  
 
   return <NavbarClient className={className} session={session} />;
 }

@@ -25,9 +25,6 @@ export const proxy = async (request: NextRequest) => {
   const isTutorOwner =
     userId && id && String(id) === String(userId);
 
-    console.log("Tutor User Id",userId)
-    console.log("User Id", id)
-
   // 🔒 3. Block specific tutor routes
   if (
     pathname.startsWith("/tutor-dashboard/availability") ||
