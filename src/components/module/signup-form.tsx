@@ -79,7 +79,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const handleGoogleLogin = () => {
     authClient.signIn.social({
       provider: "google",
-      callbackURL: "http://localhost:3000",
+      callbackURL: "https://skill-bridge-client-a4.vercel.app",
     });
   };
 
